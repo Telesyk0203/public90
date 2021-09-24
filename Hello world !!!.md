@@ -1,5 +1,3 @@
-**Hello world !!!**
+__git add__ - add file to commite & get status "staged" підготовлений 
 <br>
-Really ??
-<br >
-
+**git commit** - status "committed"
