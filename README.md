@@ -12,4 +12,7 @@ __git diff__ - difference between continue "unstaged" and last status(commit)
 <br>
 __git diff --staged__ - difference between continue "staged" file and past status(commit)
 <br>
+ **HEAD** - поточний коміт , який є актуальним
+ <br>
+ **HEAD~3** - переносимо актуальний коміт на 3 коміти назад
  
