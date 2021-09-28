@@ -24,6 +24,7 @@ $ git commit -m "My first commit"
 `git add ` та `git commit -m "Коментарій до комміту"`. Але ця команде не додає новостворені файли (untracked). Працює тільки з модифікованими(modified) файлами.
 
 __git commit --amend -m "Новий коментарій до комміту"__ - доповнює останній комміт та додає до нього "свіжі" зміни. А також новий коментарій до комміту . `Новий комміт не створюється.`
+
 ```
 $ git commit --amend -m "Done 28.09.2021"
 [master 5edc296] Done 28.09.2021
@@ -166,8 +167,12 @@ Turn off this advice by setting config variable advice.detachedHead to false
 HEAD is now at 91ab327 Checkout use
 ```
 __git checkout master__- повернення до актуального ствну репозиторію ;
+<<<<<<< HEAD
 ```
 $ git checkout master
+=======
+```$ git checkout master
+>>>>>>> 5edc2961bdcceafe0eb1107169ee3a1c17c3ecdd
 Previous HEAD position was 91ab327 Checkout use
 Switched to branch 'master'
 M       test1.txt
