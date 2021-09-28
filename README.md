@@ -33,6 +33,7 @@ $ git commit --amend -m "Done 28.09.2021"
  rewrite README.md (82%)
 ```
 
+
 **git log** - історія коммітів;
 ```
 commit a3dbc9b8120db69bd03901b06fe93ddddb0a33af (HEAD -> master, origin/master)
@@ -167,12 +168,8 @@ Turn off this advice by setting config variable advice.detachedHead to false
 HEAD is now at 91ab327 Checkout use
 ```
 __git checkout master__- повернення до актуального ствну репозиторію ;
-<<<<<<< HEAD
 ```
 $ git checkout master
-=======
-```$ git checkout master
->>>>>>> 5edc2961bdcceafe0eb1107169ee3a1c17c3ecdd
 Previous HEAD position was 91ab327 Checkout use
 Switched to branch 'master'
 M       test1.txt
