@@ -176,4 +176,15 @@ M       test1.txt
 Your branch is ahead of 'origin/master' by 1 commit.
   (use "git push" to publish your local commits)
 ```
-
+___
+## 5. git clean 
+ + __git clean -n__ - виведення списку `untracked` (невідслідковуємих) файлів , які будуть видалені;
+ ``` 
+$  git clean -n
+Would remove file_1.txt
+```
++ __git clean -f__ - видалення `untracked` (невідслідковуємих) файлів;
+```
+$ git clean -f
+Removing file_1.txt
+```
