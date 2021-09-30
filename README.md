@@ -188,3 +188,45 @@ Would remove file_1.txt
 $ git clean -f
 Removing file_1.txt
 ```
+___
+## 6. git remote (доступ до віддаленого реопозитороію)
++ __git remote add__ _origin_ (назва реопзиторію) `https://github.com/Zandalar0203/public90.git`_(адреса віддаленого репозиторію)_- додавання віддаленого репозиторію для роботи на локальній машині;
++ __git remote -v__ - відображення  списку існуючих віддаленних репозиторіїв;
+```
+$ git remote -v
+origin  https://github.com/Zandalar0203/test_project.git (fetch)
+origin  https://github.com/Zandalar0203/test_project.git (push)
+public  https://github.com/Zandalar0203/public90.git (fetch)
+public  https://github.com/Zandalar0203/public90.git (push)
+
+```
++ __git remote remove__ `origin`(назва репозиторію) - видалення віддаленного репозиторію;
+
++ __git push  public `master`__(гілка репозитарію) - додавання (пушить) до віддаленого репозиторію всі комміти певної гілки.
+
+```
+$ git push  public master
+Enumerating objects: 60, done.
+Counting objects: 100% (60/60), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (50/50), done.
+Writing objects: 100% (60/60), 8.59 KiB | 2.15 MiB/s, done.
+Total 60 (delta 17), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (17/17), done.
+To https://github.com/Zandalar0203/public90.git
+ * [new branch]      master -> master
+```
++ __git pull public `main`__ (гілка репозитарію) - запит на отримання коммітів з віддаленого репозиторію;
+
+```
+$ git pull public02 main
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 5 (delta 0), reused 5 (delta 0), pack-reused 0
+Unpacking objects: 100% (5/5), 389 bytes | 38.00 KiB/s, done.
+From https://github.com/Zandalar0203/desktop-tutorial
+ * branch            main       -> FETCH_HEAD
+ * [new branch]      main       -> public02/main
+fatal: refusing to merge unrelated histories
+```
