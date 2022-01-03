@@ -1,0 +1,22 @@
+- name: Installed firewalld
+  package: name=firewalld state=present
+
+- name: firewalld manage service
+  service: 
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: permit traffic in public for http
+  firewalld: 
+    port: 80/tcp
+    permanent: yes
+    state: eneabled 
+    immediate: yes
+
+- name: permit traffic in public for mysql
+  firewalld:
+    port: 3306/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes

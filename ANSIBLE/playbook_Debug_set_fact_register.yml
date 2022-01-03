@@ -1,0 +1,37 @@
+---
+- name: My super playbook
+  hosts: all
+  become: yes
+
+
+  vars:
+    message1 : Privet
+    message2 : World 
+    secret   : LKFIRIKVKOROROR
+
+
+  tasks:
+
+  - name  : Print secret World
+    debug :
+      var : secret
+     
+  - debug : 
+      msg : "Sekretnoe slovo {{ secret }}"
+  
+  - set_fact : full_message="{{ message1 }} {{ message2 }} {{ secret }}"
+ 
+  - debug :
+      var : full_message
+  
+  - debug : 
+      var : ansible_distribution
+
+  - debug :
+      var : ansible_os_family
+
+  - shell    : uptime
+    register : results
+
+  - debug : 
+      var : results
