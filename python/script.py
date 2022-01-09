@@ -1,3 +1,6 @@
+from typing import Counter
+
+
 name="THROLL"
 greeting=name
 print("3,2,1")
@@ -114,5 +117,54 @@ print("and again")
 print("and again")
 print("and again")
 #  To build larger programs and websites, we repeat lines of code using a while loop
-while True: 
+# while True: 
+#                 # print("and again")
+# Skip the code block of the "while" loop by setting the condition to False
+while False:
+                print("Skip me !")
+# The loop runs its entire code block because "keep_going" is True at first, but doesn't run again "keep_going" to False
+keep_going= True
+while keep_going==True:
                 print("and again")
+                keep_going= False
+                print("one more time")     
+#Controlling While Loops
+#Inside the block, we make the condition return "false" and stop the loop by incrementing the counter variable. Try it whith "counter +=1"
+counter=32
+while counter <= 44 :
+                print(counter)
+                counter+=1       
+#Like this program repeating statemants to display The Amarican Flag.
+first_counter=0
+while first_counter<5:
+                print("**********-------------------")
+                first_counter+=1
+second_counter=0
+while second_counter <4:
+                print("-----------------------------")
+                second_counter+=1  
+#In "for" loop we can specify how many times we would like our loop to run with the "range()" statement
+for i in range(5):
+                print("Happy Birthday!!!!")
+# Adding a number like "6" inside "range()" means it'll loop overthe block 6 times, from 0 to 5 
+for i in range(6):
+                print(i)
+
+#The variable before "in", in this case,"i",is the counter variable. It counts what repetition of the loop we're currently on.
+for i in range(3):
+                print(i)
+                print("For loops are great!")
+#We'll piece together different parts of a link to  give users a 50 % discount when signing up whith the link. 
+base="www.homeflix.com"
+coupon="signup/coupon"
+discount=50
+amount=4
+
+for num in range(amount):
+                print(f"{base}/{coupon}/{discount}/{num}")
+
+print(f"{amount} coupons created")
+#Organizing Data 
+# Rather than creating a variable for each new piece of data, we can collect related data inside a "list" using "[" and  "]"
+todo=["Read", "Workout", "Code"]
+print(todo)

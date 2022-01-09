@@ -129,17 +129,17 @@ nginx2                            1/1     Running   0             33m
 replicationcontroller "myapp-rc" deleted
 ```
 ### Відмінності replicaset 
-+ __kubectl create -f  /home/ts90/DATA/git_reposit/Myprogect/kubbernets/replicaset-denition.yml - створення реплікасету  з .yml файлу 
++ __kubectl create -f  /home/ts90/DATA/git_reposit/Myprogect/kubbernets/replicaset-denition.yml__ - створення реплікасету  з .yml файлу 
 ```
 kubectl create -f  /home/ts90/DATA/git_reposit/Myprogect/kubbernets/replicaset-denition.yml 
 replicaset.apps/myapp-replicaset created
 ```
-+ kubectl delete replicaset myapp-rc-  видалення PODs за назвою replicaset
++ __kubectl delete replicaset myapp-rc__-  видалення PODs за назвою replicaset
 ```
 kubectl delete replicaset myapp-rc
 replicaset.apps "myapp-rc" deleted
 ```
-+ kubectl replace -f  /home/ts90/DATA/git_reposit/Myprogect/kubbernets/replicaset-denition.yml - перезапуск реплікасету після його(файлу) змінення.
++ __kubectl replace -f  /home/ts90/DATA/git_reposit/Myprogect/kubbernets/replicaset-denition.yml__ - перезапуск реплікасету після його(файлу) змінення.
 ```
 kubectl replace -f  /home/ts90/DATA/git_reposit/Myprogect/kubbernets/replicaset-denition.yml 
 replicaset.apps/myapp-replicaset replaced
@@ -150,7 +150,7 @@ replicaset.apps/myapp-replicaset replaced
 kubectl scale --replicas=7 -f ./DATA/git_reposit/Myprogect/kubbernets/replicaset-denition.yml 
 replicaset.apps/myapp-replicaset scaled
 ```
-+ __kubectl scale --replicas=9 replicaset myapp-replicaset - зміна параметру реплікасету на льоту (без збереження в файл)
++ __kubectl scale --replicas=9 replicaset myapp-replicaset__ - зміна параметру реплікасету на льоту (без збереження в файл)
 
 ```
 kubectl scale --replicas=9 replicaset myapp-replicaset
