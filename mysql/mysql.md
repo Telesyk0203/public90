@@ -1,11 +1,11 @@
 # Установка і базові налаштування Percona Mysql server
 
-1. Встановити Percona repository 
+1. `Встановити Percona repository` 
    
    ```
    # yum install https://repo.percona.com/yum/percona-release-latest.noarch.rpm
    ```
-2. Перевірка доступності пакету
+2. `Перевірка доступності пакету`
 ```
 sudo percona-release setup ps80
 * Disabling all Percona Repositories
@@ -25,11 +25,11 @@ percona-server-rocksdb.x86_64               8.0.26-16.1.el7            ps-80-rel
 percona-server-test.x86_64                  8.0.26-16.1.el7            ps-80-release-x86_64
 percona-server-tokudb.x86_64                8.0.26-16.1.el7            ps-80-release-x86_64
 ```
-3. Встановити MySQL 
+3. `Встановити MySQL` 
 ```
 yum install percona-server-server
 ```
-4. Ознайомлення з основними параметрами файлу конфігурації MYSQL (і всіма підключеними файлами)
+4. `Ознайомлення з основними параметрами файлу конфігурації MYSQL (і всіма підключеними файлами)`
 ```
 vim /etc/my.cnf
 ```
@@ -68,15 +68,15 @@ socket=/var/lib/mysql/mysql.sock
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
 ```
-5. Налаштування автоматичного запуску сервісу systemctl
+5. `Налаштування автоматичного запуску сервісу systemctl`
 ```
 systemctl enable mysqld
 ```
-6. Запуск MySQL  systemctl
+6. `Запуск MySQL  systemctl`
 ```
 systemctl start mysqld
 ```
-7. Перевірка статусу сервісу та логи MYSQL
+7. `Перевірка статусу сервісу та логи MYSQL`
 ```
 systemctl  status mysqld
 ```
@@ -90,7 +90,7 @@ Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: 
    CGroup: /system.slice/mysqld.service
            └─1009 /usr/sbin/mysqld
 ```
-+ Перевірка логів
++ `Перевірка логів`
   
 ```
 sudo less /var/log/mysqld.log
@@ -133,7 +133,7 @@ for this channel.
 # mysql -u root -S /var/lib/mysql/mysql.sock -p
 # mysql -u root -h 127.0.0.1 -P 3306 -p
 ```
-+ Перегляд наявності підключення через файл-сокет 
++ `Перегляд наявності підключення через файл-сокет `
 ```
 ss -xap | grep mysql
 ```
@@ -147,7 +147,7 @@ u_str  ESTAB      0      0      /var/lib/mysql/mysql.sock 19478
 u_str  ESTAB      0      0       * 19477                 * 19478         
  users:(("mysql",pid=2175fd=3))
  ```
-+ Перегляд наявності підключення п мережі 
++ `Перегляд наявності підключення п мережі `
 ```
 ss -na | grep 3306 
 ```
@@ -156,7 +156,7 @@ tcp    LISTEN     0      128    [::]:3306               [::]:*
                                                                          
 tcp    LISTEN     0      70     [::]:33060              [::]:* 
 ```
-9. Задати пароль можна для root (не забудь його) такими способами:
+9. `Задати пароль можна для root (не забудь його) такими способами:`
 ```
 # mysqladmin -u root -p -S /var/lib/mysql/mysql.sock password '<new-password>'
 # mysqladmin -u root -p -h `hostname` -P 3306 password '<new-password>'
@@ -164,4 +164,65 @@ tcp    LISTEN     0      70     [::]:33060              [::]:*
 ```
 ___
 ## Робота з таблицями та базами даних
-1. 
++  ```mysql> CREATE DATABASE `Users`;```- створення бази даних ;
+  ```
+  mysql> CREATE DATABASE `Users`;
+Query OK, 1 row affected (0.02 sec)
+```
+  
+  + `створення таблиці Accounts;`
+  ```
+  create table `Accounts` 
+(`id_account`int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+`id` varchar (32) not null, 
+`password` varchar(16) null,
+`balance` decimal(15,5) not null default (0.00000),
+`billing_model` tinyint not null default(0),
+`id_customer` int(6) UNSIGNED not null default(0));
+```
++ `створення файлу для наповнення таблиці Accounts;`
+```
+Insert into `Accounts`(`id`,`password`,`balance`, `id_customer`, `billing_model`)
+values 
+('000999123','123test',default, 1, 1),
+('000999456', '123test',default, 1, 1),
+('380441112233', 'ylxlab8',default, 2, 1),
+('999610934091', null, 10.00000, 2, -1),
+('998942226765', '1oyhptao', 10.00000, 2, -1),
+('997127472771', '123test', default, 3, 1),
+('000999123', 'plt0wf', default, 3, 1),
+('000999456', 'xgmfy0', 10.00000, 2, 1 ),
+('998819317344', null, 10.00000, 1, -1 );
+```
++ `mysql> SHOW DATABASES;` - вивести список баз даних;
+```
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| User               |
+| Users              |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+```
++ ``mysql> DROP DATABASE `Users`;`` - видалити базу даних;
+```
+mysql> DROP DATABASE `Users`;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| User               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+```
