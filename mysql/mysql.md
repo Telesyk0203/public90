@@ -1,11 +1,11 @@
 # Установка і базові налаштування Percona Mysql server
 
-1. `Встановити Percona repository` 
+1. Встановити Percona repository 
    
    ```
    # yum install https://repo.percona.com/yum/percona-release-latest.noarch.rpm
    ```
-2. `Перевірка доступності пакету`
+2. Перевірка доступності пакету
 ```
 sudo percona-release setup ps80
 * Disabling all Percona Repositories
@@ -25,7 +25,7 @@ percona-server-rocksdb.x86_64               8.0.26-16.1.el7            ps-80-rel
 percona-server-test.x86_64                  8.0.26-16.1.el7            ps-80-release-x86_64
 percona-server-tokudb.x86_64                8.0.26-16.1.el7            ps-80-release-x86_64
 ```
-3. `Встановити MySQL` 
+3. Встановити MySQL 
 ```
 yum install percona-server-server
 ```
@@ -68,15 +68,15 @@ socket=/var/lib/mysql/mysql.sock
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
 ```
-5. `Налаштування автоматичного запуску сервісу systemctl`
+5. Налаштування автоматичного запуску сервісу systemctl
 ```
 systemctl enable mysqld
 ```
-6. `Запуск MySQL  systemctl`
+6. Запуск MySQL  systemctl
 ```
 systemctl start mysqld
 ```
-7. `Перевірка статусу сервісу та логи MYSQL`
+7. Перевірка статусу сервісу та логи MYSQL
 ```
 systemctl  status mysqld
 ```
@@ -90,7 +90,7 @@ Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: 
    CGroup: /system.slice/mysqld.service
            └─1009 /usr/sbin/mysqld
 ```
-+ `Перевірка логів`
++ Перевірка логів
   
 ```
 sudo less /var/log/mysqld.log
@@ -133,7 +133,7 @@ for this channel.
 # mysql -u root -S /var/lib/mysql/mysql.sock -p
 # mysql -u root -h 127.0.0.1 -P 3306 -p
 ```
-+ `Перегляд наявності підключення через файл-сокет `
++ Перегляд наявності підключення через файл-сокет 
 ```
 ss -xap | grep mysql
 ```
@@ -147,7 +147,7 @@ u_str  ESTAB      0      0      /var/lib/mysql/mysql.sock 19478
 u_str  ESTAB      0      0       * 19477                 * 19478         
  users:(("mysql",pid=2175fd=3))
  ```
-+ `Перегляд наявності підключення п мережі `
++ Перегляд наявності підключення п мережі 
 ```
 ss -na | grep 3306 
 ```
@@ -156,7 +156,7 @@ tcp    LISTEN     0      128    [::]:3306               [::]:*
                                                                          
 tcp    LISTEN     0      70     [::]:33060              [::]:* 
 ```
-9. `Задати пароль можна для root (не забудь його) такими способами:`
+9. Задати пароль можна для root (не забудь його) такими способами:
 ```
 # mysqladmin -u root -p -S /var/lib/mysql/mysql.sock password '<new-password>'
 # mysqladmin -u root -p -h `hostname` -P 3306 password '<new-password>'
@@ -164,13 +164,13 @@ tcp    LISTEN     0      70     [::]:33060              [::]:*
 ```
 ___
 ## Робота з таблицями та базами даних
-+  ```mysql> CREATE DATABASE `Users`;```- створення бази даних ;
++  mysql> CREATE DATABASE `Users`;- створення бази даних ;
   ```
   mysql> CREATE DATABASE `Users`;
 Query OK, 1 row affected (0.02 sec)
 ```
   
-  + `створення таблиці Accounts;`
+  + створення таблиці Accounts;
   ```
   create table `Accounts` 
 (`id_account`int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
@@ -180,7 +180,7 @@ Query OK, 1 row affected (0.02 sec)
 `billing_model` tinyint not null default(0),
 `id_customer` int(6) UNSIGNED not null default(0));
 ```
-+ `створення файлу для наповнення таблиці Accounts;`
++ створення файлу для наповнення таблиці Accounts;
 ```
 Insert into `Accounts`(`id`,`password`,`balance`, `id_customer`, `billing_model`)
 values 
@@ -194,7 +194,7 @@ values
 ('000999456', 'xgmfy0', 10.00000, 2, 1 ),
 ('998819317344', null, 10.00000, 1, -1 );
 ```
-+ `mysql> SHOW DATABASES;` - вивести список баз даних;
++ __mysql> SHOW DATABASES;__ - вивести список баз даних;
 ```
 mysql> SHOW DATABASES;
 +--------------------+
@@ -209,7 +209,7 @@ mysql> SHOW DATABASES;
 +--------------------+
 6 rows in set (0.00 sec)
 ```
-+ ``mysql> DROP DATABASE `Users`;`` - видалити базу даних;
++ __mysql> DROP DATABASE `Users`;__ - видалити базу даних;
 ```
 mysql> DROP DATABASE `Users`;
 Query OK, 0 rows affected (0.02 sec)
@@ -226,3 +226,224 @@ mysql> SHOW DATABASES;
 +--------------------+
 5 rows in set (0.00 sec)
 ```
+
+## Файли конфігурацій MySQL сервера
++ __mysql --help | grep -A1 'Default options'__ -приклад  для пошуку файлів конфігурування
+
+```mysql --help | grep -A1 'Default options'
+Default options are read from the following files in the given order:
+/etc/my.cnf /etc/mysql/my.cnf /usr/etc/my.cnf ~/.my.cnf 
+```
+/etc/my.cnf - файл глобальної конфігурації БД
+```
+ Percona Server template configuration
+#
+# For advice on how to change settings please see
+# http://dev.mysql.com/doc/refman/8.0/en/server-configuration-defaults.html
+
+[mysqld]
+#
+# Remove leading # and set to the amount of RAM for the most important data
+# cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.
+# innodb_buffer_pool_size = 128M
+#
+# Remove the leading "# " to disable binary logging
+# Binary logging captures changes between backups and is enabled by
+# default. It's default setting is log_bin=binlog
+# disable_log_bin
+#
+# Remove leading # to set options mainly useful for reporting servers.
+# The server defaults are faster for transactions and fast SELECTs.
+# Adjust sizes as needed, experiment to find the optimal values.
+# join_buffer_size = 128M
+# sort_buffer_size = 2M
+# read_rnd_buffer_size = 2M
+#
+# Remove leading # to revert to previous value for default_authentication_plugin,
+# this will increase compatibility with older clients. For background, see:
+# https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_default_authentication_plugin
+# default-authentication-plugin=mysql_native_password
+
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+[server]
+validate_password.policy='LOW'
+```
+
+___
+## Виконання запитів
+ + Вивести всі облікові записи з порожніми паролями
+  
+```
+mysql> select * from Accounts where password is null;
++------------+--------------+----------+----------+---------------+-------------+
+| id_account | id           | password | balance  | billing_model | id_customer |
++------------+--------------+----------+----------+---------------+-------------+
+|          4 | 999610934091 | NULL     | 10.00000 |            -1 |           2 |
+|          9 | 998819317344 | NULL     | 10.00000 |            -1 |           1 |
++------------+--------------+----------+----------+---------------+-------------+
+2 rows in set (0,00 sec)
+```
++ Вивести всі акаунти id починається з 0
+```
+  mysql> select * from Accounts where id like '0%';
++------------+-----------+----------+----------+---------------+-------------+
+| id_account | id        | password | balance  | billing_model | id_customer |
++------------+-----------+----------+----------+---------------+-------------+
+|          1 | 000999123 | 123test  |  0.00000 |             1 |           1 |
+|          2 | 000999456 | 123test  |  0.00000 |             1 |           1 |
+|          7 | 000999123 | plt0wf   |  0.00000 |             1 |           3 |
+|          8 | 000999456 | xgmfy0   | 10.00000 |             1 |           2 |
++------------+-----------+----------+----------+---------------+-------------+
+4 rows in set (0,00 sec)
+```
++ Вивести Customer які мають в імені "Test" як підрядок.
+```
+mysql> select * from Customers where name like '%Test%';
++-------------+-------------------------+-----------+---------+
+| id_customer | name                    | firstname | balance |
++-------------+-------------------------+-----------+---------+
+|           1 | zzzPortaTestCustomer    | NULL      | 0.00000 |
+|           3 | zzzPortaTestCustomerZZZ | NULL      | 0.00000 |
++-------------+-------------------------+-----------+---------+
+2 rows in set (0,00 sec)
+```
++ * Вивести імена Customers у кого є акаунти з billing_model = -1 (потрібний підзапит)
+```
+mysql> select * from Customers where id_customer  in (select id_customer from Accounts where billing_model=-1);
++-------------+----------------------+-----------+---------+
+| id_customer | name                 | firstname | balance |
++-------------+----------------------+-----------+---------+
+|           1 | zzzPortaTestCustomer | NULL      | 0.00000 |
+|           2 | John                 | John      | 0.00000 |
++-------------+----------------------+-----------+---------+
+2 rows in set (0,00 sec)
+```
++ Підрахувати число облікових записів для кожного Customer( ім'я, число облікових записів)* потрібно використовувати JOIN
+```
+mysql> select name, count(id_account) from Customers c join Accounts a on c.id_customer=a.id_customer group by c.name ;
++-------------------------+-------------------+
+| name                    | count(id_account) |
++-------------------------+-------------------+
+| zzzPortaTestCustomer    |                 3 |
+| John                    |                 4 |
+| zzzPortaTestCustomerZZZ |                 2 |
++-------------------------+-------------------+
+3 rows in set (0,00 sec)
+
+```
+___
+## Налаштування Mysql та реезервне копіювання (backup)
+Налаштування MySQL
++ Знайдіть файли конфігурації MySQL у вашій системі.
+
++ Вивчіть їх структуру і знайдіть всі секції (деякі секції можуть бути в файлах, що підключаються).
+
++ Запустіть та підключіться до MySQL.
+
++ Знайдіть значення опції validate_password.policy
+
+
+Як подивитися значення опції\змінної?
+
+`mysql> SHOW VARIABLES LIKE 'validate_password.policy';`
+
++ Знайдіть значення всіх опцій, що стосуються validate_password.
+
+Як переглянути значення групи змінних?
+
+`mysql> SHOW VARIABLES LIKE 'validate_password.%';`
+
++ Встановіть значення опції validate_password.policy у значення LOW. Переконайтеся, що вона змінилася. 
+```
+mysql> set global validate_password.policy = LOW;
+Query OK, 0 rows affected (0,00 sec)
+```
+```
+mysql> SHOW VARIABLES LIKE 'validate_password.%';
++--------------------------------------+-------+
+| Variable_name                        | Value |
++--------------------------------------+-------+
+| validate_password.check_user_name    | ON    |
+| validate_password.dictionary_file    |       |
+| validate_password.length             | 8     |
+| validate_password.mixed_case_count   | 1     |
+| validate_password.number_count       | 1     |
+| validate_password.policy             | LOW   |
+| validate_password.special_char_count | 1     |
++--------------------------------------+-------+
+7 rows in set (0,01 sec)
+```
+
++ Перезапустіть сервіс, перевірте значення опції. Зробіть висновок.
+
++ Задайте політику validate_password.policy у конфігураційному файлі  `/etc/mysql/mysql.conf.d/mysqld.cnf 
+` у відповідній секції.
+```
+[mysqld]
+validate_password.policy=STRONG
+```
+
++ Перевірте значення опції до та після перезавантаження сервісу. Зробіть висновок.
+
+ + Додайте опцію, яка зменшить обов'язкову кількість символів у паролі до 5.
+```
+[mysqld]
+
+validate_password.length=5
+```
+
++ Запустіть сервер на нестандартному порту (3307). Спробуйте підключитися до сервера (із портом і без).
+Змініть локальні установки клієнта в конфігураційному файлі користувача.
+Спробуйте підключитися до сервера (із портом і без).
+Поверніть стандартний порт.
+
+___
+## Створення резервної копії бази даних
++ Збережіть структуру БД (без даних) у файл Dump1.sql.
+```
+sudo mysqldump -p VoiCompany --no-data> Dump1.sql
+```
+ + Вивчіть вміст файлу. Проінспектуйте файл командою файлу. 
+
+ + Збережіть вміст БД у файл Dump2.sql з опцією дропа бази даних.
+```
+sudo mysqldump -p --no-create-info --add-drop-database VoiCompany > Dump2.sql
+```
+
++ Вивчіть вміст файлу. Проінспектуйте файл командою файлу.
+
++ Збережіть структуру БД + дані у файл конвеєром через gzip Dump3.sql.gz
+```
+sudo mysqldump -p --databases VoiCompany | gzip > Dump3.sql.gz
+```
++ Вивчіть вміст файлу. Проінспектуйте файл командою файлу.
+
+
++ Спробуйте завантажити вміст файлу Dump1.sql
+```
+mysql < "name of dump file"
+```
++ Завантажте вміст файлу Dump2.sql. Перегляньте вміст БД.
+```
+sudo mysql -p VoiCompany < Dump2.sql
+```
++ Видаліть БД.
+```
+mysql> drop database VoiCompany;                                          
+Query OK, 2 rows affected (0,04 sec) 
+```
+
++ Завантажте вміст файлу Dump3.sql. Перегляньте вміст БД.
+```
+gunzip < Dump3.sql.gz | sudo mysql -p
+```
+
++ Збережіть вміст таблиці Accounts. У файл повинні потрапити лише акаунти, у яких не встановлено пароль.
+```
+sudo mysqldump -p --databases VoiCompany --tables Accounts --where="password is null" > Dump6.sql
+```
+___
