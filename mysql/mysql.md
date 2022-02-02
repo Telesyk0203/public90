@@ -447,3 +447,313 @@ gunzip < Dump3.sql.gz | sudo mysql -p
 sudo mysqldump -p --databases VoiCompany --tables Accounts --where="password is null" > Dump6.sql
 ```
 ___
+## Користувачі та привілеї MySQL
++ Завантажте дамп бази rating.sql на встановлений сервер MySQL.
+```
+sudo mysql -p VoiCompany < rating.sql
+```
++ Створіть нового користувача з наступними параметрами:
+
+ім'я користувача – test;
+хост – 127.0.0.1;
+пароль – "test123".
+```
+create user 'test'@'127.0.0.1' identified by 'test123';
+Query OK, 0 rows affected (0,02 sec)
+
+```
+Підказка з password_policy
+
++ Запит на перегляд користувача
+
+select * from mysql.user where User = 'test'\G
+
++ Дайте вашому користувачеві всі привілеї, зокрема. "grant option". Привілеї мають поширюватися лише на таблиці бази даних "rating".
+```
+mysql> GRANT ALL ON Rating.* TO 'test'@'127.0.0.1' WITH GRANT OPTION;
+Query OK, 0 rows affected (0,07 sec)
+```
++ Перевірте результат командою: show grants for <користувач>@<хост>
+```
+mysql> show grants for 'test'@'127.0.0.1';
++----------------------------------------------------------------------------+
+| Grants for test@127.0.0.1                                                  |
++----------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `test`@`127.0.0.1`                                   |
+| GRANT ALL PRIVILEGES ON `Rating`.* TO `test`@`127.0.0.1` WITH GRANT OPTION |
++----------------------------------------------------------------------------+
+2 rows in set (0,00 sec)
+```
+
++ sЗробіть запити до таблиць "db", "tables_priv" та "columns_priv" бази даних mysql.
+
++ Дайте вашому користувачеві привілеї на вибірку та внесення записів у таблицю "Rating".
+```
+mysql> GRANT SELECT, UPDATE ON mysql.db TO 'test'@'127.0.0.1';
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> GRANT SELECT, UPDATE ON mysql.tables_priv TO 'test'@'127.0.0.1';
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> GRANT SELECT, UPDATE ON mysql.columns_priv TO 'test'@'127.0.0.1';
+Query OK, 0 rows affected (0,00 sec)
+```
+
++ Зробіть запити до таблиць "db", "tables_priv" та "columns_priv" бази даних mysql.
+
+`Вибірка має стосуватися лише користувача 'test'@'127.0.0.1'.`
+```
+mysql> select * from tables_priv where User='test' \G;
+*************************** 1. row ***************************
+       Host: 127.0.0.1
+         Db: mysql
+       User: test
+ Table_name: columns_priv
+    Grantor: root@localhost
+  Timestamp: 0000-00-00 00:00:00
+ Table_priv: Select,Update
+Column_priv: 
+*************************** 2. row ***************************
+       Host: 127.0.0.1
+         Db: mysql
+       User: test
+ Table_name: db
+    Grantor: root@localhost
+  Timestamp: 0000-00-00 00:00:00
+ Table_priv: Select,Update
+Column_priv: 
+*************************** 3. row ***************************
+       Host: 127.0.0.1
+         Db: mysql
+       User: test
+ Table_name: tables_priv
+    Grantor: root@localhost
+  Timestamp: 0000-00-00 00:00:00
+ Table_priv: Select,Update
+Column_priv: 
+3 rows in set (0,01 sec)
+
+ERROR: 
+No query specified
+```
+```
+ysql> select * from db where User='test' \G;
+*************************** 1. row ***************************
+                 Host: 127.0.0.1
+                   Db: Rating
+                 User: test
+          Select_priv: Y
+          Insert_priv: Y
+          Update_priv: Y
+          Delete_priv: Y
+          Create_priv: Y
+            Drop_priv: Y
+           Grant_priv: Y
+      References_priv: Y
+           Index_priv: Y
+           Alter_priv: Y
+Create_tmp_table_priv: Y
+     Lock_tables_priv: Y
+     Create_view_priv: Y
+       Show_view_priv: Y
+  Create_routine_priv: Y
+   Alter_routine_priv: Y
+         Execute_priv: Y
+           Event_priv: Y
+         Trigger_priv: Y
+1 row in set (0,01 sec)
+
+ERROR: 
+No query specified
+```
+
+
++ Підключіться до сервера MySQL з даними користувача test з локальної консолі на ім'я (localhost), по IP (127.0.0.1) та з віддаленого сервера.
+```
+sudo mysql -u test -h 127.0.0.1 -p 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.27-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+```
++ Під користувачем test продивіться список баз даних на сервері, перегляньте список таблиць rating та mysql
+```
+show tables in mysql;
+show tables in rating;
+```
+```
+mysql> show tables in mysql;
++-----------------+
+| Tables_in_mysql |
++-----------------+
+| columns_priv    |
+| db              |
+| tables_priv     |
++-----------------+
+3 rows in set (0,00 sec)
+
+mysql> show tables in Rating;
++------------------+
+| Tables_in_Rating |
++------------------+
+| Movie            |
+| Rating           |
+| Reviewer         |
++------------------+
+3 rows in set (0,00 sec)
+```
++ Перезайдіть в БД від імені суперкористувача і спробуйте зняти з користувача "test" наступні привілеї:
+```
+sudo mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.27-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+```
+
+### 1. drop на всі таблиці баз даних "rating"
+```
+mysql> REVOKE DROP ON Rating.* FROM 'test'@'127.0.0.1';
+Query OK, 0 rows affected (0,01 sec)
+```
++ Перейдіть на БД "mysql". Зробіть запити до таблиць "db", "tables_priv" та "columns_priv".Вибірка має стосуватися лише користувача 'test'@'127.0.0.1'.
+`Перевірте результат командою: show grants for <користувач>@<хост>`
+```
+mysql> select * from db where User='test' \G;
+*************************** 1. row ***************************
+                 Host: 127.0.0.1
+                   Db: Rating
+                 User: test
+          Select_priv: Y
+          Insert_priv: Y
+          Update_priv: Y
+          Delete_priv: Y
+          Create_priv: Y
+            Drop_priv: N
+           Grant_priv: Y
+      References_priv: Y
+           Index_priv: Y
+           Alter_priv: Y
+Create_tmp_table_priv: Y
+     Lock_tables_priv: Y
+     Create_view_priv: Y
+       Show_view_priv: Y
+  Create_routine_priv: Y
+   Alter_routine_priv: Y
+         Execute_priv: Y
+           Event_priv: Y
+         Trigger_priv: Y
+1 row in set (0,00 sec)
+
+ERROR: 
+No query specified
+
+mysql> 
+```
+```
+mysql> show grants for 'test'@'127.0.0.1'\G;
+*************************** 1. row ***************************
+Grants for test@127.0.0.1: GRANT USAGE ON *.* TO `test`@`127.0.0.1`
+*************************** 2. row ***************************
+Grants for test@127.0.0.1: GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, REFERENCES, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON `Rating`.* TO `test`@`127.0.0.1` WITH GRANT OPTION
+*************************** 3. row ***************************
+Grants for test@127.0.0.1: GRANT SELECT, UPDATE ON `mysql`.`columns_priv` TO `test`@`127.0.0.1`
+*************************** 4. row ***************************
+Grants for test@127.0.0.1: GRANT SELECT, UPDATE ON `mysql`.`db` TO `test`@`127.0.0.1`
+*************************** 5. row ***************************
+Grants for test@127.0.0.1: GRANT SELECT, UPDATE ON `mysql`.`tables_priv` TO `test`@`127.0.0.1`
+5 rows in set (0,00 sec)
+```
+
+
+### 2.зміна структури таблиці "Rating"
++ Перейдіть на БД "mysql". Зробіть запити до таблиць "db", "tables_priv" та "columns_priv".Вибірка має стосуватися лише користувача 'test'@'127.0.0.1'.
+`Перевірте результат командою: show grants for <користувач>@<хост> (зробіть висновок)`
+```
+mysql> REVOKE ALTER ON Rating.Rating FROM 'test'@'127.0.0.1';
+Query OK, 0 rows affected (0,00 sec)
+```
+
+* Заборонити виведення колонки "mID" таблиці "Rating".
+Перейдіть на БД "mysql". Зробіть запити до таблиць "db", "tables_priv" та "columns_priv".
+Вибірка має стосуватися лише користувача 'test'@'127.0.0.1'.
+Перевірте результат командою: show grants for <користувач>@<хост>
+## LaB
++ Create a dump of the table 'city' and mention there only cities with population of more or equal than a million people.
+Give it a name 'big.sql'.
+```
+sudo mysql new_world < big.sql
+```
++ Create a table 'big_country' in the new DB based on the table 'country' from 'world' DB with mentioning only countries with population of more than 200 million people. Use only one SQL-query for this.
+```
+sudo mysqldump --databases world --tables country --where="Population >200000000" > big2.sql
+```
+```
+nano big2.sql
+```
+```
+
+Data Base: rating.sql
+
+Exercises:
+
+1. Find the titles of all movies directed by Steven Spielberg.
+[Найдите названия всех фильмов режиссера Стивена Спилберга]
+
+2. Find all years that have a movie that received a rating of 4 or 5, and sort them in increasing order.
+[Найдите все года, в которых был выпущен фильм получивший оценку 4 или 5, и отсортируйте их в порядке возрастания]
+
+3. Find the titles of all movies that have no ratings.
+[Найдите названия всех фильмов, которые не получили никакую оценку]
+
+4. Some reviewers didn't provide a date with their rating. Find the names of all reviewers who have ratings with a NULL value for the date.
+[Некоторые критики не предоставили дату, когда была поставлена оценка. Найдите имена всех критиков, у которых есть оценки и значение даты NULL]
+
+5. Write a query to return the ratings data in a more readable format: reviewer name, movie title, stars, and ratingDate. Also, sort the data, first by reviewer name, then by movie title, and lastly by number of stars.
+[Напишите запрос, который возвращает данные об оценках в более читабельном формате: reviewer name, movie title, stars и ratingDate. Также, отсортируйте данные сперва по  имени критика, затем по названию фильма и в конце по рейтингу]
+
+6. * For all cases where the same reviewer rated the same movie twice and gave it a higher rating the second time, return the reviewer's name and the title of the movie.
+[Для всех случаев, когда один и тот же критик оценил один фильм дважды и дал ему во второй раз выше оценку чем в первый, выведите имя критика и название фильма]
+
+7. For each movie that has at least one rating, find the highest number of stars that movie received. Return the movie title and number of stars. Sort by movie title.
+[Для каждого фильма, у которого есть хотя бы одна оценка, найдите наибольшее количество звезд, которые фильм получил. Выведите название фильма и количество звезд. Отсортируйте их по названию фильма]
+
+8. For each movie, return the title and the 'rating spread', that is, the difference between highest and lowest ratings given to that movie. Sort by rating spread from highest to lowest, then by movie title.
+[Для каждого фильма выведите название и "разницу в оценке”, то есть разницу между наивысшей и наинизшей оценках, которые получал фильм. Отсортируйте по этой разнице от наивысшей до самой низкой, а потом по названию фильма]
+
+9. ** Find the difference between the average rating of movies released before 1980 and the average rating of movies released after 1980. (Make sure to calculate the average rating for each movie, then the average of those averages for movies before 1980 and movies after. Don't just calculate the overall average rating before and after 1980.)
+[Найдите разницу между средней оценкой фильмов, выпущенных до 1980 года и средней оценкой фильмов, выпущенных после 1980 года. (Убедитесь, что вы посчитали среднюю оценку для каждого фильма, потом среднее значение этих средних значений для фильмов, выпущенных до и после 1980 года. А не просто подсчитайте общую среднюю оценку до и после 1980 года)]
+
+
+SQL Movie-Rating Modification Exercises
+
+1. Add the reviewer Roger Ebert to your database, with an rID of 209.
+[Добавьте критика Roger Ebert в Вашу базу данных с rID - 209]
+
+2. Insert 5-star ratings by James Cameron for all movies in the database. Leave the review date as NULL.
+[Вставьте оценку 5, выставленную James Cameron, для всех фильмов в базе данных. Оставьте дату выставления оценки NULL]
+
+3. For all movies that have an average rating of 4 stars or higher, add 25 to the release year. (Update the existing tuples; don't insert new tuples.)
+[Для всех фильмов, у которых средняя оценка 4 или выше, добавьте 25 к году выпуска. (Используйте update, а не insert)]
+
+ 
