@@ -249,13 +249,19 @@ create table `Accounts`
 `id_customer` int(6) UNSIGNED not null default(0));
 ```
 ```
-create table `Accounts` 
-(`id_account`int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-`id` varchar (32) not null, 
-`password` varchar(16) null,
-`balance` decimal(15,5) not null default (0.00000),
-`billing_model` tinyint not null default(0),
-`id_customer` int(6) UNSIGNED not null default(0));
+mysql> desc laptop;
++-------------------------+------------------+------+-----+---------+----------------+
+| Field                   | Type             | Null | Key | Default | Extra          |
++-------------------------+------------------+------+-----+---------+----------------+
+| id                      | int unsigned     | NO   | PRI | NULL    | auto_increment |
+| manufacturer            | varchar(32)      | YES  |     | NULL    |                |
+| CPU speed(GHz)          | decimal(15,5)    | NO   |     | NULL    |                |
+| release_date            | varchar(16)      | YES  |     | NULL    |                |
+| broken(y/n)             | enum('yes','no') | NO   |     | NULL    |                |
+| owner(name and surname) | varchar(64)      | YES  |     | NULL    |                |
++-------------------------+------------------+------+-----+---------+----------------+
+6 rows in set (0,00 sec)
+
 ```
 
 18. Load some data to created above table with help of INSERT, LOAD DATA, and source commands.
