@@ -1,0 +1,9 @@
+[Interface]
+PrivateKey = 
+Address = 
+
+[Peer]
+Endpoint = 
+AllowedIPs =
+PublicKey = 
+PresharedKey = 
