@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #ORGANIZING DATA
 # _________________________
 # 1.Grouping Data in  Lists 
@@ -78,7 +77,6 @@ print(number_of_users)
 tasks = ["Почистити зуби", "Вмитися","Сходити в туалет", "Зробити фізичну зарядку"]
 if len(tasks)>0:
     print("Закінчи вранішні процедури")
-=======
 #ORGANIZING DATA
 # _________________________
 # 1.Grouping Data in  Lists 
@@ -158,4 +156,3 @@ print(number_of_users)
 tasks = ["Почистити зуби", "Вмитися","Сходити в туалет", "Зробити фізичну зарядку"]
 if len(tasks)>0:
     print("Закінчи вранішні процедури")
->>>>>>> 0a561cb385807e3ba107454766433f41c85fba8b

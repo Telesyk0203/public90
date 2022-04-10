@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # PYTHON BASICS
 #1. Creating Variables
 # To create a variable(змінна), we need to give "name". Variable names need to be single words and ,therefore(внасідок цього),have no spaces.
@@ -277,7 +276,6 @@ print(number_of_users)
 # We can use list lenght to create conditional statemants(вираз з умовою) based on the number of elements like here with "len(tasks)>0"
 tasks = ["Почистити зуби", "Вмитися","Сходити в туалет", "Зробити фізичну зарядку"]
 if len(tasks)>0:
-=======
 # PYTHON BASICS
 #1. Creating Variables
 # To create a variable(змінна), we need to give "name". Variable names need to be single words and ,therefore(внасідок цього),have no spaces.
@@ -556,5 +554,4 @@ print(number_of_users)
 # We can use list lenght to create conditional statemants(вираз з умовою) based on the number of elements like here with "len(tasks)>0"
 tasks = ["Почистити зуби", "Вмитися","Сходити в туалет", "Зробити фізичну зарядку"]
 if len(tasks)>0:
->>>>>>> 0a561cb385807e3ba107454766433f41c85fba8b
     print("Закінчи вранішні процедури")
