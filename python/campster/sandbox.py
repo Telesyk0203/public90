@@ -188,10 +188,153 @@
 
 # Простий приклад використання raise:
 
-def chkassert(num):
-    assert type(num) == int
-    return num**2
+# def chkassert(num):
+#     assert type(num) == int
+#     return num**2
 
-chkassert('a')
+# chkassert('a')
+
+# class Primer:
+#     def __init__(self,a,b):
+#         self.a=a
+#         self.b=b
+
+#     def add(self):
+#         return self.a + self.b
+
+# e = Primer(40,6)
+# print(e.add())
+
+# class Example:
+#     def __init__(self, a,b):
+#         self.a=a
+#         self.b=b
+    
+#     def add(self):
+#         return self.a+self.b
+
+# e= Example (100,6)
+# print(e.add())
+        
+# class Parent:
+#     def __init__(self, a) -> None:
+#         self.a=a
+#     def method1(self):
+#         print(self.a*2)
+#     def method1(self):
+#         print(self.a+'!!!!')
+
+# class Parent:
+#     def __init__(self, a):
+#         self.a=a
+#     def method1(self):
+#         print(self.a*2)
+#     def method2(self):
+#         print(self.a+'!!!!')
+
+# class Child(Parent):
+#     def __init__(self,a,b):
+#         self.a=a
+#         self.b=b
+#     def method1(self):
+#         print(self.a*7)
+#     def method3(self):
+#         print(self.a + self.b)
+
+# p=Parent('hi')
+# c=Child('hi','bye')
+
+# print('Parent method1:',p.method1())
+# print('Parent method2:', p.method2())
+# print()
+# print('Child method1', c.method1())
+# print('Child method2', c.method2())
+# print('Child method3', c.method3())
+
+# class Shark():
+#     def swim(self):
+#         print('The shark is swimming.')
+    
+#     def swim_backwards(self):
+#         print('The shark cannot swim backwards, but can sink backwards.')
+
+#     def skeleton(self):
+#         print("The shark's skeleton is made of cartilage")
+
+# class Clownfish():
+#     def swim(self):
+#         print("The clownfish is swimming.")
+    
+#     def swim_backwards(self):
+#         print("The clownfish can swim backwards.")
+
+#     def skeleton(self):
+#         print("The clownfish's skeleton is made of bone.")
+
+# sammy=Shark()
+# sammy.skeleton()
+
+# casey=Clownfish()
+# casey.skeleton()
+# from tkinter import *
+# root = Tk()
+# mainloop()
+##################################
+# from tkinter import*
+# def change():
+#    entry=int(entry.get()) 
+#    output_lablel.configure(text='Дохід від  вбитих москалів:{:1f} $'.format(entry))
+#    output_lablel=entry*100
+#    entry.delete(0,END)
+
+# root = Tk()
+# message_lable=Label(text='Введіть кількість убитих москалів ', font=('Vernada',16))
+# output_lablel=Label(font=('Vernada',22))
+# entry=Entry(font=('Vernada',22), width=4)
+# calc_button=Button(text='Натиснути', font=('Vernada', 18), command=change)
+# message_lable.grid(row=0,column=0)
+# entry.grid(row=0,column=1)
+# calc_button.grid(row=0,column=2)
+# output_lablel.grid(row=1, column=0,columnspan=3)
+# mainloop()
+
+################################
+# marks = {'Physics':67, 'Maths':87}
+
+# print(marks.get('Physics'))
+
+#########################Поле введення###################
+# За допомогою поля введення GUI допускає введення тексту. Наступний приклад демонструє, як створюється поле введення:
+# import string
+
+
+# entry = Entry()
+# entry.grid(row=0, column=0)
+
+# # Ми використовуємо grid для розміщення поля введення та інших елементів на екрані.
+
+# # Щоб отримати текст з поля введення, ми використовуємо функцію "get". За замовчуванням ця функція повертає рядок, і якщо нам потрібні числові дані, ми можемо скористатися функцією eval або int, float. Тепер наведемо простий приклад отримання даних з поля введення, яке ми назвали entry:
+
+# string_value = entry.get()
+# num_value = eval(entry.get())
+
+# # Якщо нам потрібно видалити текст з цього поля, ми можемо зробити це в такий спосіб:
+# entry.delete(0,END)
+
+# # Для введення тексту в поле ми використовуємо:
+# entry.insert(0, 'hello')
+# #############################Зображення######################
+# # Мітки, кнопки та інші віджети можуть відображати зображення замість тексту. Використання зображень вимагає трохи підготовки. Спочатку нам потрібно створити об’єкт PhotoImage та дати йому ім’я:
+
+# cheetah_image = PhotoImage(file='cheetahs.gif')
+# # Тепер ми відобразимо зображення у віджетах:
+
+# label = Label(image=cheetah_image)
+# button = Button(image=cheetah_image, command=cheetah_callback())
+#                # Одним із обмежень Tkinter є те, що можна використовувати лише зображення GIF. Якщо Ви хочете використовувати деякі інші типи файлів, одним із рішень є використання бібліотеки Python Imaging Library, за допомогою якої Ви можете конвертувати інші формати зображень у GIF.
+ 
+score = [3,25,7.01,85.3,95.20,2,6,77,9]
+score.sort()
+print(score)
 
 
