@@ -1,22 +1,20 @@
-
 print ('Hello  world')
-
 dict
 {'alex':'123', 'anna':'564'}
-
 bool
 True
 False
-
 set
 { }
 x='None'
 print(type(x))
 print(x)
-
-
 from ast import While
+
+from datetime import datetime
+from functools import wraps
 import math
+import re
 from tkinter import E
 a=15
 b= 11
@@ -433,11 +431,251 @@ printText_taras(msg, end='!', sep=': ')
 '''
 
 
+'''
+Конструкції *args та **kwargs 
+'''
+# Спецсимвол * бере на себе всі об'єкти які не ввійшли в другі змінні при упаковці і віддає множину елеентів при розпаковці
+a, *b, c = 12, 5.46, 'Text!!!' , 45 , 'Error'
+print(a) # 12
+print(b) #  [5.46, 'Text!!!', 45] тобто там де стоїть змінна з * то вона зеберає  всі значення на себе які залишилися в позиційному списку 
+print(c) # 'Error'
+
+print(type(b)) # <class 'list'>
+
+s=[4,10]
+print(s) # [4, 10]
+
+print(list(range(*s))) # [4, 5, 6, 7, 8, 9] створення списку в діапазоні від 4 до 10 (без 10)
 
 
+# *args зарезервований системою атрибут функції , який приймає на себе необмежена кількість неіменованих параметрів, та упаковує їх в кортеж(tuple)
+def funct(*args): # *args надає змогу викорстовувати необмежену кількість неіменованих елементів
+    print(sum(args)*0.06)
 
 
+funct(34,44,444,3324,2424,23,14,)  # 378.41999999999996  
+funct(1,60) # 3.6599999999999997
 
 
+# **kwargs зарезервований системою атрибут функції , який приймає на себе необмежена кількість іменованих параметрів, та упаковує їх в словник (dict)
 
+def funct_kwargs(**kwargs):# **kwargs  надає змогу викорстовувати необмежену кількість іменованих елементів
+    print(kwargs)
+
+funct_kwargs(a=45, b='fuck', c=4.44) # {'a': 45, 'b': 'fuck', 'c': 4.44}  дані типу словник
+
+
+def func_args_kwargs(*args, **kwargs):
+    print(args)
+    print(kwargs)
+
+func_args_kwargs(45, 34, 'Rust', a=44, c= 'dust' )
+#(45, 34, 'Rust')
+#{'a': 44, 'c': 'dust'}
+
+
+'''
+map , filter and lambda function
+'''
+
+# Функція map застосовує іншу функцію до кожного елементу послідовності 
+            # def map (func, iterable):
+                # for i in iterable:
+                    #yield func(i)
+
+def sq (x): # функція яка буде застосована до списку "а"
+    return x**2
+
+a= [-2, -1, 5 , 7, 3] # список до якого буде застосована функція "sq"
+
+b = map(sq, a)# використання map для проходження функції sq по кожному елементу списку "а"
+print(b) # <map object at 0x0000022B2911F1F0> map object 
+
+c= list(map(sq,a))
+print(c) # [4, 1, 25, 49, 9] list
+
+t=tuple(map(sq,a))
+print(t)
+print(type(t)) # <class 'tuple'>
+
+
+d= [ 'hello' , 'cnn', 'mood', 'good']
+x= list(map(str.upper,d))# Використовуємо функцію str.upper до кожного елементу списку 
+print(x)# ['HELLO', 'CNN', 'MOOD', 'GOOD']
+
+
+# Функція filter застосовує іншу функцію функцію перевірки з результатом типу bool до кожного елементу послідовності відфільтровуючи значення з True 
+
+def is_adult(age):
+    return age>= 18
+
+age=[18 , 15 , 25 , 23 , 12 , 5 , 46 , 32]
+
+adult=list(filter(is_adult, age))
+
+print(adult)# [18, 25, 23, 46, 32] вивело тільки ті значення які більша або дорінюють  18 
+
+
+# Lambda- анонімна функція без оголошення , служить для скорочення запису простих функцій , зловживати не потрібно 
+
+
+is_young = lambda age: age < 18# Написали функцію в більш спрощеному варіанті 
+
+young= list(filter(is_young,age))
+
+print(young)#[15, 12, 5]
  
+'''
+Nested function (вкладені функції )
+ та область видимості змінних
+'''
+# Ієрархічна структура LEGB:
+    # Local локальна змінна в рамках функції 
+    # Enclosing вища змінна  в функції
+    # Global змінна задана для всього проекту глобально
+    # Bild-in вмонтована в Python об'єкти 
+
+
+a= 10 # global variable 
+print(a) # global function 10
+
+
+def nFunc(x):
+
+    for i in range(x):
+        #global a 
+        a = 59
+        n=i+1 # local variable 
+        print(n) 
+
+nFunc(6)
+print(a) # global function 59
+# Ключево слово global використовується для перевизначення глобальної змінної в рамках функції. Зловживати непотрібно !
+name='Anna'
+def print1():
+    print('Первинна функція: ' + name)
+    def print2():
+        print('Друга функція: '+ name) 
+    print2()
+
+print1() #Первинна функція: Anna
+         #Друга функція: Anna
+
+# print2() # NameError: name 'print2' is not defined. Did you mean: 'print1'?
+
+def print1():
+    print('Первинна функція: ' + name)
+    def print2():
+        name= 'Taras' # Локальна змінна має пріорітетність на глобальною змінною name = 'Anna'
+        print('Друга функція: '+ name) 
+    print2()
+
+print1() #Первинна функція: Anna
+         #Друга функція: Taras
+
+def print1():
+    name= 'Taras' # Локальна змінна має пріорітетність на глобальною змінною name = 'Anna'
+    print('Первинна функція: ' + name)
+    def print2():
+        print('Друга функція: '+ name) 
+    print2()
+
+print1() #Первинна функція: Taras
+         # Друга функція: Taras
+
+
+# КОНСТАНТ в Python не існує(на рівні мови) , в пайтон константи звичайні глобальні змінні для всієї систем, запис відбуваєься у ВЕРХНЬОМУ регістрі. Використовуються в крайніх випадкахб наприклад API_KEY в файлі settings проекту.
+# 
+
+'''
+Декоратори та дкоратор @wraps
+'''
+# Створення ДЕКОРАТОРА
+import datetime
+from functools import wraps # імпортування wraps 
+def recTime(func): #Назва декоратора , що створюємо 
+    @wraps(func)# Декоратор який виводить допоміжну інфу про функцію створємого декоратора(функції recTime)
+    def wrapper(*args, **kwargs):
+        '''
+        Функція яка рахує час роботи інших функцій
+        '''
+        start = datetime.datetime.now() # Початок (старт) рахунку часу роботи функції 
+        func(*args , **kwargs)# Сама функція що буде працювати
+        done= datetime.datetime.now() - start #  Змінна яка є різницею між  часом заверешення функції і початком (старту) роботи функції func
+        print(f'Функція заверешена за {done} секунд')
+    return wrapper
+
+
+# Застосування @recTime декоратору(функціїrecTime(func))
+@recTime # Вказуємо який саме декоратор буде застосовуватись до наступної функції 
+def sfunc():
+    '''
+    Функція просто чекає 3 секунди
+    '''
+    time.sleep(3)
+    print('Закінчено')
+
+sfunc()
+
+
+help(sfunc) # Вивід допоміжної інформації 
+                # Help on function sfunc in module __main__:
+
+                # sfunc()
+                #     Функц\u0456я просто чекає 3 секунди
+
+'''
+Помилки та виключення (Exeptions) Python
+'''
+# Для запобігання помилок , використовуєм перевірки виеористовуючи if, elif, else
+ 
+
+
+
+
+
+#  #Застосовуєм конструкцію try except finally:
+                # try:
+                    # код програми
+                # except <error name>:
+                    # дія припомилці <error name>
+                # загальний except Exception as e:
+                    # дія з "e" та type(e)
+                # finally 
+                    # дія яка має виконатися в любому випадку
+
+# # while True:
+#     try:
+#         a= int(input('Введіть перше число : '))
+#         b= int(input('Введіть друге число : '))
+
+#         print(a/b)
+#     except ZeroDivisionError :
+#         print('Помилка!!! ZeroDivisionError ! Ділити на нуль неможна!!! ЙОбаний ти )) ')
+#     except ValueError:
+#         print('Помилка !!! ValueError !!! Введіть число а не текст!!! Заїбав)) ')
+#     except Exception as e :
+#         print(e, type(e))
+#     finally:
+#         print('Операція закінчена!!!')
+
+import requests
+from datetime import datetime
+while True:
+    try:
+        a=requests.get('https://google.com/')
+        print(a)
+        time.sleep(60)
+        if a == '<Response [200]>':
+            pass
+        elif a == '<Response [503]>':
+            print('Помилка сайту')
+        else:
+            print('Інша помилка!!!Порішай вже щось з нею !!!')
+    except requests.exceptions.ConnectionError:
+        error_time = datetime.now()
+        time.sleep(15)
+        print('Сервер упав !\n ' + str(error_time))
+
+    except Exception as e:
+        print(e, type(e))
