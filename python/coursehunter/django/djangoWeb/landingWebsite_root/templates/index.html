@@ -7,10 +7,25 @@
     <title>TarasaSite</title>
 </head>
 <body>
-    <h1>  {{a}} </h1>
-  
-    <h2>
-        {{text}}
-    </h2>
+    {% if  object_list%}
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Дата</th>
+            <th>Ім'я</th>
+            <th>Телефон</th>
+        </tr>
+    {%for obj in object_list%}
+        <tr>
+            <th>{{obj.id}}</th>
+            <th>{{obj.order_dt}}</th>
+            <th>{{obj.order_name}}</th>
+            <th>{{obj.order_phone}}</th>
+        </tr>
+    {%endfor%}   
+    </table>
+    {% else %}
+    <h3>Немає  даних</h3>
+    {% endif %}
 </body>
 </html>           
