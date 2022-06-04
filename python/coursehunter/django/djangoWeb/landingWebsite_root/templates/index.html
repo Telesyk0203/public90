@@ -7,6 +7,19 @@
     <title>TarasaSite</title>
 </head>
 <body>
+    <form action="{% url 'thanks_page' %}" method="POST">
+        {% csrf_token %}
+        <label>Ім'я</lable>
+        <input name="name">
+        <label>Телефон</lable>
+        <input name= "phone">
+        <button type="submit">ВІДПРАВИТИ</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     {% if  object_list%}
     <table border="1">
         <tr>
