@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Шаблонна сторінка{% endblock title %}</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet"
+</head>
+<body>
+<header>
+    <h1>Шапка сайту</h1>
+    <h1>_____________________________________________________________</h1>
+</header>
+
+
+{% block content %}
+{% endblock content %}
+
+
+
+
+
+
+
+<footer>
+    <h1>_____________________________________________________________</h1>
+    <h1>Підвал сайту</h1>
+
+</footer>    
+</body>
+</html>

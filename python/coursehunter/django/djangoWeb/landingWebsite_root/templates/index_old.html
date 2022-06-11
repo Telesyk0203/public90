@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TarasaSite</title>
+</head>
+<body>
+
+    <form action="{% url 'thanks_page' %}" method="POST">
+        {% csrf_token %}
+        {% comment %} <label>Ім'я</lable>
+        <input name="name">
+        <label>Телефон</lable>
+        <input name= "phone"> {% endcomment %}
+        {% comment %} {{form}} {% endcomment %}
+        {{form.as_p}}
+        <button type="submit">ВІДПРАВИТИ</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    {% if  object_list%}
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Дата</th>
+            <th>Ім'я</th>
+            <th>Телефон</th>
+        </tr>
+    {%for obj in object_list%}
+        <tr>
+            <th>{{obj.id}}</th>
+            <th>{{obj.order_dt}}</th>
+            <th>{{obj.order_name}}</th>
+            <th>{{obj.order_phone}}</th>
+        </tr>
+    {%endfor%}   
+    </table>
+    {% else %}
+    <h3>Немає  даних</h3>
+    {% endif %}
+</body>
+</html>           
