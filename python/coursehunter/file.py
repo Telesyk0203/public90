@@ -170,7 +170,6 @@ students={
     'taras':300,
     'vitaliy':258,
     'oleg':159,
-
 }
 print(students)
 print(students['taras'])#Вивід значення ключа "тарас" відповідь "300"
