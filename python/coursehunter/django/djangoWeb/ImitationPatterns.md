@@ -54,9 +54,9 @@
    ```
     {% extends 'base.html' %} # Розширення за допомогою основного файлу base.html
     {% block title %} Головна сторінка{% endblock title %} # Введення свого тайтлу замість шаблонного
-    {% block content %}#Початок  введення Контену сторінки html код 
+    {% block content %}#Початок  введення Контенту сторінки html код 
     <h2> Дані з файлу індексу(index.html) </h2>html код 
     {% include 'index_old.html' %}# Код іншої сторінки html в цю сторінку
-    {% endblock content %}Кінець Контену
+    {% endblock content %}Кінець Контенту
     
    ```
