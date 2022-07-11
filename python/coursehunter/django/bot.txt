@@ -1,0 +1,7 @@
+https://api.telegram.org/bot5505395694:AAH3itDIOxuK1cCa09es5zLZyGyFbWlWD4w/sendMessage?chat_id=-621279078&text=Перевіка зв'язку
+
+bot<token> = 5505395694:AAH3itDIOxuK1cCa09es5zLZyGyFbWlWD4w 
+
+name_bot= t.me/bot_for_Strikha_bot
+
+Type of Method =sendMessage

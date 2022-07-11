@@ -1,9 +1,11 @@
+import imp
 from unicodedata import name
 from django.shortcuts import render
 from .models import Order
 from .forms import OrderForms
 from cms.models import CmsSlider
 from price.models import PriceCard, PriceTable
+from telebot.sendmessage import sendTelegram
 # Create your views here.
 def first_page(request):
     slider_list=CmsSlider.objects.all()# Визначємо (ренедерим) усі разом об'єкти додатку  CmsSlider
@@ -14,6 +16,7 @@ def first_page(request):
     pc_3=PriceCard.objects.get(pk=4)# Виводимо окреме значення по приватному ключу pk=4
     pc_3_description=pc_3.pc_description# Визначаємо окремий парметра значення як опис в додатку PriceCard
     price_table=PriceTable.objects.all()# Визначємо (ренедерим) усі разом об'єкти додатку  PriceTable
+    form= OrderForms()# Визначємо (ренедерим) усі разом об'єкти моделі  OrderForms
     dict_obj= {'slider_list':slider_list,           
                 'pc_1':pc_1,
                 'pc_2': pc_2,
@@ -21,6 +24,7 @@ def first_page(request):
                 'pc_1_description':pc_1_description,
                 'pc_2_description':pc_2_description,
                 'pc_3_description':pc_3_description,
+                'form': form,
                 'price_table':price_table}
     return render(request,'./index.html',dict_obj)
 
@@ -31,4 +35,5 @@ def thanks_page(request):
     # phone= request.GET['phone']
     element= Order(order_name = name, order_phone= phone)
     element.save()
-    return render(request, './thanks_page.html', {'name':name, 'phone':phone})
+    sendTelegram(tg_phone=phone, tg_name=name)
+    return render(request, './thanks.html', {'name':name})
