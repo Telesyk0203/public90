@@ -261,38 +261,181 @@
 // taras.hasDriverLicense();
 // console.log (taras.getSummary());
 
+// Challenge #3
 
-const mark = {
-      firstName: 'Mark',
-      lastName : 'Miller',
-      mass : 78 ,
-      hight : 1.69,
-      calcBMI : function (){
-            this.bmi = this.mass /this.hight ** 2 ;
-            return this.bmi
-      },
+// const mark = {
+//       firstName: 'Mark',
+//       lastName : 'Miller',
+//       mass : 78 ,
+//       hight : 1.69,
+//       calcBMI : function (){
+//             this.bmi = this.mass /this.hight ** 2 ;
+//             return this.bmi
+//       },
+// }
+
+// console.log(mark.calcBMI())
+
+// const john = {
+//       firstName: 'John',
+//       lastName : 'Smith',
+//       mass : 92 ,
+//       hight : 1.95,
+//       calcBMI : function (){
+//             this.bmi = this.mass /this.hight ** 2 ;
+//             return this.bmi
+//       },
+// }
+
+
+// console.log(john.calcBMI());
+
+// if (mark.bmi > john.bmi){
+
+//       console.log(`${mark.firstName} ${mark.lastName} bmi (${mark.bmi}) is higher than ${john.firstName} ${john.lastName} bmi (${john.calcBMI()})`)
+// }else{
+//       console.log(`${mark.firstName} ${mark.lastName} bmi (${mark.bmi}) is NOT higher than ${john.firstName} ${john.lastName} bmi (${john.calcBMI()})`);
+
+// };
+
+// LOOP 
+
+// for (let rep = 1 ; rep <= 30 ; rep ++){
+//       console.log(`Lift weights repetition ${rep} 🏋🏼‍♂️` );
+      
+// }
+
+// const tarasArray = [
+//           'Taras',
+//           'Strikha',
+//           1990,
+//           'military',
+//           ['Oksana', 'Iryna', 'Vlad'],
+//       ];
+
+// const types = [];
+
+// for (let i = 0 ;i < tarasArray.length ; i ++)
+// {
+//       console.log(tarasArray[i], typeof tarasArray[i]);
+
+//       // types[i] = typeof tarasArray[i];
+//       types.push(typeof tarasArray [i])
+// }
+
+// console.log(types);
+
+// const years = [1990, 1991, 1994, 1995];
+
+// const ages = [];
+
+// for (let i = 0 ; i < years.length; i++){
+//       // ages[i] = 2022 -years[i];
+//       ages.push(2022-years[i]);
+// }
+ 
+// console.log (ages);
+
+// // continue & break
+// console.log ('----------ONLY STRINGS---------');
+
+// for (let i = 0 ;i < tarasArray.length ; i ++)
+// { if (typeof tarasArray[i] !== 'string')  continue;
+
+//       console.log(tarasArray[i], typeof tarasArray[i]);
+
+// }
+// console.log ('----------BREAK WITH NUMBER---------');
+// for (let i = 0 ;i < tarasArray.length ; i ++)
+// { if (typeof tarasArray[i] == 'number')  break;
+
+//       console.log(tarasArray[i], typeof tarasArray[i]);
+
+// }
+
+// const taras = [
+//       'Taras',
+//       'Strikha',
+//       1990,
+//       'military',
+//       ['Oksana', 'Iryna', 'Vlad'],
+//       true
+//   ];
+
+//   for (let i = taras.length - 1 ; i >= 0 ; i--) {
+//       console.log (i ,taras[i]);
+//   }
+
+//   for (let exercise = 1; exercise < 4 ; exercise ++){
+//       console.log(`--------Starting exercise ${exercise} 🏁`);
+      
+//       for (let repetition =1 ; repetition < 6 ; repetition++) {
+//             console.log(`Exercise ${exercise} !!!!! Lifting weight repetition ${repetition} 🏋🏼‍♂️`)
+//       }
+// }
+
+// for (let repetition =1 ; repetition <= 10 ; repetition++) {
+//       console.log(` !!!!! Lifting weight repetition ${repetition} 🏋🏼‍♂️`);
+// }
+
+// let repetition = 1;
+// while (repetition <= 10) {
+//       console.log(` WHILE!!!!! Lifting weight repetition ${repetition} 🏋🏼‍♂️`);
+//       repetition++;
+// }
+
+// let dice =Math.trunc (Math.random()*6)+1;
+// console.log(dice);
+
+// while (dice !== 6 ) {
+//       console.log(`You rolled a ${dice}`);
+//       dice =Math.trunc (Math.random()*6)+1;
+//       if (dice === 6) console.log (`Loop is about to end ... ${dice} is rolled!!!!`)
+// }
+
+// Challenge #4
+const calcTip = function (bill) {
+          if (bill > 50 && bill < 300) {
+              const tip = bill * 0.15
+              return tip
+          } else {
+              const tip = bill * 0.2
+              return tip
+          }
+      }
+      
+const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86 , 52,]
+      
+      
+const total = [];
+const tips = [];
+
+for (let  i =  0 ;i < bills.length ; i++ ){
+      const tip = calcTip(bills[i]);
+      tips.push(tip);
+      total.push(tip + bills[i]);
+      
 }
 
-console.log(mark.calcBMI())
+console.log(bills, tips)
+console.log(total)
 
-const john = {
-      firstName: 'John',
-      lastName : 'Smith',
-      mass : 92 ,
-      hight : 1.95,
-      calcBMI : function (){
-            this.bmi = this.mass /this.hight ** 2 ;
-            return this.bmi
-      },
+const arr = [20,96,65,96,9,87,52,32,966]
+
+c058/onst calcAverage = function (arr){
+      let sum = 0 ;
+            for (let i = 0 ; i < arr.length; i++){
+             sum = sum + arr[i];
+      }
+return sum / arr.length;
 }
 
+console.log(calcAverage(bills, tips, total))
+console.log(calcAverage(tips))
+console.log(calcAverage( total))
 
-console.log(john.calcBMI());
 
-if (mark.bmi > john.bmi){
 
-      console.log(`${mark.firstName} ${mark.lastName} bmi (${mark.bmi}) is higher than ${john.firstName} ${john.lastName} bmi (${john.calcBMI()})`)
-}else{
-      console.log(`${mark.firstName} ${mark.lastName} bmi (${mark.bmi}) is NOT higher than ${john.firstName} ${john.lastName} bmi (${john.calcBMI()})`)
+У пункті 2 записується освіта згідно атестату або диплому, військовозобов’язаний має повну загальну середню освіту, то записують: 11 класів, якщо військовозобов’язаний має базову загальну середню освіту – 9 класів, якщо військовозобов’язаний має початкову загальну освіту – 8 класів і нижче. Для осіб, що закінчили професійно-технічне училище, вказують яке училище закінчив. Якщо військовозобов’язаний має базову (1-2 рівні акредитації (технікум, училище, коледж)) або повну (3-4 рівнів акредитації (інститут, консерваторія, академія, університет), вищу освіту, то записують назву останнього навчального закладу, який він закінчив, наприклад: повна вища, ВДУ ім. Л. Українки в 2009 році.
 
-}
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
